@@ -11,15 +11,26 @@ import java.util.Collections;
  */
 public class Player
 {
-  private Deck deck;
+  protected Deck deck;
   private boolean dead;
+  private String teamName;
   
   /**
    * Player constructor
    */
   public Player() {
     this.deck = new Deck();
-    dead = false;
+    dead = false;    
+  }
+  
+  /**
+   * Player constructor with teamName added as instance variable
+   * If teamName is not set, then the class name is used when printed
+   * during game play
+   */
+  public Player(String teamName) {
+    this();
+    this.teamName = teamName;
   }
   
   /**
@@ -35,7 +46,7 @@ public class Player
    * @return not dead
    */
   public boolean isNotDead() {
-    return !dead;
+    return !this.isDead();
   }
   
   /**
@@ -61,26 +72,14 @@ public class Player
     this.deck = deck;
   }
   
-  /**
-   * Draw a card from deck
-   * @param deck Deck to draw from
-   */
-  public void draw(Deck deck) {
-    this.deck.draw(deck);
+  public void draw(Card card) {
+    this.deck.add(card);
   }
   
-  public void remove(Deck deck) {
-    deck.getCards().forEach((card) -> {
-      this.deck.remove(card);
-    });
-  }
-
-  /** 
-   * Deal a card from this player's deck
-   * @return Card dealt
-   */
-  public Card deal() {
-    return deck.deal();
+  public void removeCards(Deck cards) {
+    for (Card card : cards.getCards()) {
+      this.deck.removeCard(card);
+    }
   }
   
   /**
@@ -88,14 +87,11 @@ public class Player
    * @param player 
    */
   public void displayHand() {
-    System.out.println("\n******* PLAYER "+this.getName()+" *******");
-    for (Card card : this.deck.getCards()) {
-      System.out.println(card.getRank()+' '+card.getSuit());
+    System.out.println("\n******* "+this.getName()+" *******");
+    Card[] cards = this.deck.getCards();
+    for (int i=0; i<cards.length; i++) {
+      System.out.println(cards[i].getRank()+' '+cards[i].getSuit());
     }
-  }
-  
-  public void cardsPlayed(Deck deck) {
-    
   }
   
   /**
@@ -103,7 +99,7 @@ public class Player
    * @return        Player name
    */
   public String getName() {
-    return this.getClass().getSimpleName();
+    return (this.teamName.equals("")) ? this.getClass().getSimpleName() : this.teamName;
   }
   
   /**
@@ -115,5 +111,9 @@ public class Player
   Deck getNextMove(int total) {
     return null;
   };
+  
+  public void cardsPlayed(Deck deck) {
+    
+  }  
 
 }

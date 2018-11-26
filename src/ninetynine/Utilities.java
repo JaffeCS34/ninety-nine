@@ -1,15 +1,12 @@
 package ninetynine;
 
-import java.util.ArrayList;
-
 /**
  * Write a description of class Utilities here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Utilities
-{
+public class Utilities {
 
   /**
    * Gets the new score when playing this card given the old score
@@ -51,6 +48,7 @@ public class Utilities
         case Constants.KING:
           return true;
         case Constants.ACE:
+          return total + 1 <= Constants.NINETY_NINE;
         case Constants.TWO:
         case Constants.THREE: 
         case Constants.FOUR: 
@@ -59,9 +57,8 @@ public class Utilities
         case Constants.SEVEN:
         case Constants.EIGHT: 
         case Constants.NINE: 
-        case Constants.TEN: {
+        case Constants.TEN: 
           return total + (new Integer(card.getRank())) <= Constants.NINETY_NINE;
-        }        
       }
     }
     return false;

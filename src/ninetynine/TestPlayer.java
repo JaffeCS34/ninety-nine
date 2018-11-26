@@ -9,19 +9,24 @@ import java.util.Collections;
  * @author Mr. Jaffe
  * @version 1.0
  */
-public class TestPlayer
-{
-  private Deck deck;
-  private boolean dead;
+public class TestPlayer extends Player {
   
   /**
-   * Gets the player name
-   * @return        Player name
+   * Player constructor
    */
-  public String getName() {
-    return this.getClass().getSimpleName();
+  public TestPlayer() {
+    super();
   }
   
+  /**
+   * Player constructor with teamName added as instance variable
+   * If teamName is not set, then the class name is used when printed
+   * during game play
+   */
+  public TestPlayer(String teamName) {
+    super(teamName);
+  }
+
   /**
    * The player must override getNextMove
    * @param board Game board
@@ -32,8 +37,9 @@ public class TestPlayer
     int i = 0;
     while (i < this.deck.getCardCount()) {
       Deck deck = new Deck();
-      deck.add(this.deck.getCards().get(i));
+      deck.add(this.deck.deal());
       if (Utilities.isLegalMove(deck, total))
+        return deck;
     }
     return null;
   };

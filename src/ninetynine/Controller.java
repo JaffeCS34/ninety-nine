@@ -41,7 +41,7 @@ public class Controller
     this.deck.newDeck();
     for (int c = 0; c < Constants.INITIAL_CARD_COUNT; c++) 
       for (int i = 0; i < players.length ; i++) 
-        this.players[i].draw(this.deck);  
+        this.players[i].draw(this.deck.deal());  
   }
 
   /**
@@ -62,9 +62,9 @@ public class Controller
    * Displays the match up with the player names
    */
   public void displayMatchup() {
-    System.out.println("\n******* MATCHUPS *******");
+    System.out.println("\n******* MATCHUP *******");
     for (int i = 0; i < this.players.length; i++) {
-      System.out.println("Player "+(i+1)+": "+this.players[i].getName());
+      System.out.println("  "+this.players[i].getName());
     }
   }
   
@@ -79,13 +79,13 @@ public class Controller
   
   private boolean isValidPlay(Deck play) {
     boolean retValue = false;
-    if (play.getCardCount() == 2) {
-      if (play.isPair()) {
-        retValue = true;
-      }
-    } else if(play.getCardCount() == 1 && Utilities.isLegalMove(play, this.total)) {
-      retValue = true;
-    }
+//    if (play.getCardCount() == 2) {
+//      if (play.isPair()) {
+//        retValue = true;
+//      }
+//    } else if(play.getCardCount() == 1 && Utilities.isLegalMove(play, this.total)) {
+//      retValue = true;
+//    }
     return retValue;
   }
   
@@ -97,26 +97,40 @@ public class Controller
     try {
       // Print heading
       System.out.println("\nSTART OF GAME");
+      
+      this.displayMatchup();
+      
+      for (Player p : this.players) {
+        p.displayHand();
+      }
 
       // Delay so we can see the progression in the console
       TimeUnit.MILLISECONDS.sleep(Constants.DELAY);
 
       while (!gameOver) {
-        Player p = this.players[this.whoseTurn];
-        p.displayHand();
-        Deck play = p.getNextMove(this.total);
-        
+        Player player = this.players[this.whoseTurn];
+        Deck play = player.getNextMove(this.total);
+
         // Process the play
-        if (play == null) {
-          p.setDead();
-          this.finishOrder.add(p);
+        if (play == null || !this.isValidPlay(play)) {
+          player.setDead();
+          this.finishOrder.add(player);
+          System.out.println(player.getName()+" cannot make a play and is OUT");
         } else if (this.isValidPlay(play)) {
           this.total = Utilities.getNewTotal(play, this.total);
-          p.remove(play);
-          p.draw(this.deck);
-        } else {
-          p.setDead();
-          this.finishOrder.add(p);
+          player.removeCards(play);
+          player.draw(this.deck.deal());
+          System.out.print(player.getName()+" played ");
+          if (play.getCardCount() == 2) {
+            System.out.println("a pair of "+play.getCard(0).getRank()+"'s");
+          } else {
+            System.out.println("the "+play.getCard(0).getRank()+" of "+play.getCard(0).getSuit());
+          }
+          System.out.println("Now the total is "+this.total);
+
+          // Delay so we can see the progression in the console
+          TimeUnit.MILLISECONDS.sleep(Constants.DELAY);
+
         }
         
         // Notify players of the cards that were played

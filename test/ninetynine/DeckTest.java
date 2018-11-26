@@ -158,7 +158,7 @@ public class DeckTest {
    * Test of findPairs method, of class Deck.
    */
   @Test
-  public void testFindPairs1() {
+  public void testFindPairs() {
     Card card1 = new Card(Constants.FOUR, Constants.HEARTS);
     Card card2 = new Card(Constants.TWO, Constants.CLUBS);
     Card card3 = new Card(Constants.FOUR, Constants.CLUBS);
@@ -205,5 +205,35 @@ public class DeckTest {
     instance.add(card1);
     assertEquals(false, instance.isEmptyDeck());
   }
-  
+
+  /**
+   * Test of getCards method, of class Deck.
+   */
+  @Test
+  public void testGetCards() {
+    Deck instance = new Deck();
+    Card card1 = new Card(Constants.ACE, Constants.HEARTS);
+    Card card2 = new Card(Constants.TWO, Constants.CLUBS);
+    Card card3 = new Card(Constants.THREE, Constants.CLUBS);
+    Card card4 = new Card(Constants.FOUR, Constants.HEARTS);
+    instance.add(card1);
+    instance.add(card2);
+    instance.add(card3);
+    instance.add(card4);
+    Card[] expResult = {card1, card2, card3, card4};
+    Card[] result = instance.getCards();
+    assertArrayEquals(expResult, result);
+  }
+
+  /**
+   * Test of getCards method, of class Deck.
+   */
+  @Test
+  public void testGetCards2() {
+    Deck instance = new Deck();
+    Card[] expResult = null;
+    Card[] result = instance.getCards();
+    assertArrayEquals(expResult, result);
+  }
+
 }

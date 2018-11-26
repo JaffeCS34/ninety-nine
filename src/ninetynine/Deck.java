@@ -50,6 +50,10 @@ public class Deck
       return null;
   }
   
+  public void removeCard(Card card) {
+    this.cards.remove(card);
+  }
+  
   /**
    * Get an individual card from the deck but DO NOT remove it!
    * @param idx
@@ -68,6 +72,15 @@ public class Deck
    */
   public int getCardCount() {
     return this.cards.size();
+  }
+  
+  public Card[] getCards() {
+    if (this.getCardCount() == 0) return null;    
+    Card[] cards = new Card[this.getCardCount()];
+    for (int i=0; i<this.getCardCount(); i++) {
+      cards[i] = this.getCard(i);
+    }
+    return cards;
   }
 
   /** 

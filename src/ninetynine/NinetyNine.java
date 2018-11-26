@@ -17,10 +17,10 @@ public class NinetyNine {
    */
   public static void main(String[] args) {
     Player[] players = new Player[]{
-      new Player(), 
-      new Player(), 
-      new Player(), 
-      new Player()
+      new TestPlayer("Arthur"), 
+      new TestPlayer("Bertha"), 
+      new TestPlayer("Carlos"), 
+      new TestPlayer("Dimitri")
     };
     Controller c = new Controller(players);
     c.run();
