@@ -22,19 +22,44 @@ public class Deck
   }
   
   /**
-   * Copies a deck from an existing deck
-   * @param deck 
+   * Add a card to this deck
+   * @param card Card to add
    */
-  public Deck(Deck deck) {
-    this.cards = deck.getCards();
+  public void add(Card card) {
+    this.cards.add(card);
+    this.sort();
   }
   
   /**
-   * Gets the deck of cards
-   * @return ArrayList Deck of cards
+   * Get the top card from this deck and return it
+   * @return Dealt card
    */
-  public ArrayList<Card> getCards() {
-    return this.cards;
+  public Card deal() {
+    return this.deal(0);
+  }
+
+  /**
+   * Deal the card at index idx and remove from this deck
+   * @param idx Index of card to remove
+   * @return Dealt card
+   */
+  public Card deal(int idx) {
+    if (0 <= idx && idx < this.cards.size())
+      return this.cards.remove(idx);
+    else
+      return null;
+  }
+  
+  /**
+   * Get an individual card from the deck but DO NOT remove it!
+   * @param idx
+   * @return 
+   */
+  public Card getCard(int idx) {
+    if (0 <= idx && idx < this.cards.size()) 
+      return this.cards.get(idx);
+    else
+      return null;
   }
   
   /**
@@ -45,14 +70,6 @@ public class Deck
     return this.cards.size();
   }
 
-  /**
-   * Are the first two cards the same rank?
-   * @return True if cards 0 and 1 are the same rank
-   */
-  public boolean isPair() {
-    return this.cards.get(0).getRank().equals(this.cards.get(1).getRank());
-  }
-  
   /** 
    * Creates a new deck of cards in order
    */
@@ -64,32 +81,6 @@ public class Deck
       }
     }
     this.shuffle();
-  }
-  
-  /**
-   * Sorts the cards in the deck
-   */
-  public void sort() {
-    Collections.sort(cards, new SortByCard());
-  }
-  
-  /**
-   * Gets all the card pairs by rank only
-   * @return ArrayList of Decks with the cards that form each pair
-   */
-  public ArrayList<Deck> getPairs() {
-    ArrayList<Deck> pairs = new ArrayList<>();
-    for (int i = 0; i < cards.size()-1; i++) {
-      for (int j = i+1; j < cards.size(); j++) {
-        if (cards.get(i).getRank().equals(cards.get(j).getRank())) {
-          Deck d = new Deck();
-          d.draw(cards.get(i));
-          d.draw(cards.get(j));
-          pairs.add(d);
-        }
-      }
-    }
-    return pairs;
   }
   
   /**
@@ -106,42 +97,29 @@ public class Deck
   }
   
   /**
-   * Receive a drawn card and add to this deck
-   * @param card Card to add to the deck
+   * Sorts the cards in the deck
    */
-  public void draw(Card card) {
-    if (card != null) 
-      this.cards.add(card);
-    this.shuffle();
-  }
-
-  /**
-   * Draw a card from the deck and add it to this deck
-   * @param deck Deck from which the card should be drawn
-   */
-  public void draw(Deck deck) {
-    this.draw(deck.deal());
-    this.sort();
+  public void sort() {
+    Collections.sort(cards, new SortByCard());
   }
   
   /**
-   * Get the top card from this deck and return it
-   * @return Dealt card (null if deck is empty)
+   * Gets all the card pairs by rank only
+   * @return ArrayList of Decks with the cards that form each pair
    */
-  public Card deal() {
-    if (this.isEmptyDeck()) {
-      return null;
-    } else {
-      return this.cards.remove(0);
+  public ArrayList<Deck> findPairs() {
+    ArrayList<Deck> pairs = new ArrayList<>();
+    for (int i = 0; i < cards.size()-1; i++) {
+      for (int j = i+1; j < cards.size(); j++) {
+        if (cards.get(i).getRank().equals(cards.get(j).getRank())) {
+          Deck d = new Deck();
+          d.add(this.getCard(i));
+          d.add(this.getCard(j));
+          pairs.add(d);
+        }
+      }
     }
-  }
-  
-  /**
-   * Remove the specified card by removing it
-   * @param card 
-   */
-  public void remove(Card card) {
-    this.cards.remove(card);
+    return pairs;
   }
   
   /**

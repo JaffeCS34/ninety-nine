@@ -64,6 +64,38 @@ public class Card
     return 0;
   }
   
+  public int getPointValue() {
+    switch (this.rank) {
+      case Constants.ACE:
+        return 1;
+      case Constants.TWO:
+      case Constants.THREE:
+      case Constants.FOUR:
+      case Constants.FIVE:
+      case Constants.SIX:
+      case Constants.SEVEN:
+      case Constants.EIGHT:
+      case Constants.NINE:
+      case Constants.TEN:
+        return new Integer(this.rank);
+      case Constants.JACK:
+        return 0;
+      case Constants.QUEEN:
+        return -10;
+      case Constants.KING:
+        return Constants.NINETY_NINE;
+      default:
+        {
+          try {
+            throw new Exception("Invalid card rank");
+          } catch (Exception ex) {
+            Logger.getLogger(Card.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        }
+    }
+    return 0;
+  }
+  
   /**
    * Get the card suit
    * @returns Card suit

@@ -13,7 +13,7 @@ import java.util.Comparator;
 public class SortByCard implements Comparator<Card> {
   
   public int compare(Card a, Card b) {
-    return b.getRankInt() - a.getRankInt();
+    return a.getRankInt() - b.getRankInt();
   }
 
 }

@@ -18,11 +18,10 @@ public class Utilities
    * @return The new score
    */
   public static int getNewTotal(Deck deck, int total) {
-    int retValue = total;
-    ArrayList<Card> cards = deck.getCards();
-    if (cards.size() == 1) {
-      switch(cards.get(0).getRank()) {
-        case Constants.ACE: retValue = total + 1;
+    if (deck.getCardCount() == 1) {
+      Card card = deck.getCard(0);
+      switch(card.getRank()) {
+        case Constants.ACE: return total + 1;
         case Constants.TWO:
         case Constants.THREE: 
         case Constants.FOUR: 
@@ -32,25 +31,25 @@ public class Utilities
         case Constants.EIGHT: 
         case Constants.NINE: 
         case Constants.TEN: 
-          retValue = total + (new Integer(cards.get(0).getRank()));
-        case Constants.QUEEN: retValue = total - 10;
-        case Constants.KING: retValue = Constants.NINETY_NINE;
+          return total + (new Integer(card.getRank()));
+        case Constants.QUEEN: return total - 10;
+        case Constants.KING: return Constants.NINETY_NINE;
       }      
     }
-    return retValue;
+    return total;
   }
   
   public static boolean isLegalMove(Deck deck, int total) {
     boolean retValue = false;
-    ArrayList<Card> cards = deck.getCards();
-    if (cards.size() == 2) {
-      return (cards.get(0).getRank().equals(cards.get(1).getRank()));
-    } else if (cards.size() == 1) {
-      switch(cards.get(0).getRank()) {
+    if (deck.getCardCount() == 2) {
+      return (deck.getCard(0).getRank().equals(deck.getCard(1).getRank()));
+    } else if (deck.getCardCount() == 1) {
+      Card card = deck.getCard(0);
+      switch(card.getRank()) {
         case Constants.JACK:
         case Constants.QUEEN:
         case Constants.KING:
-          retValue = true;
+          return true;
         case Constants.ACE:
         case Constants.TWO:
         case Constants.THREE: 
@@ -61,10 +60,10 @@ public class Utilities
         case Constants.EIGHT: 
         case Constants.NINE: 
         case Constants.TEN: {
-          retValue = total + (new Integer(cards.get(0).getRank())) <= Constants.NINETY_NINE;
+          return total + (new Integer(card.getRank())) <= Constants.NINETY_NINE;
         }        
       }
     }
-    return retValue;
+    return false;
   }
 }
