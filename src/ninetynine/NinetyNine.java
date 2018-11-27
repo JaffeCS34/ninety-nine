@@ -7,7 +7,7 @@ package ninetynine;
 import java.util.ArrayList;
 
 /**
- *
+ * Ninety-nine card game!!
  * @author Roger Jaffe
  */
 public class NinetyNine {

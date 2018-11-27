@@ -2,13 +2,10 @@ package ninetynine;
 
 import java.util.Comparator;
 
-/*
- * Copyright 2018 Roger Jaffe
- * All rights reserved
- */
-
 /**
  * Comparator that sorts by card rank only
+ * @author Roger Jaffe
+ * @version 2018-11-29
  */
 public class SortByCard implements Comparator<Card> {
   

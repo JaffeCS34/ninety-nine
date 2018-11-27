@@ -1,10 +1,10 @@
 package ninetynine;
 
 /**
- * Write a description of class Utilities here.
+ * Utility functions
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Roger Jaffe
+ * @version 2018-11-29
  */
 public class Utilities {
 

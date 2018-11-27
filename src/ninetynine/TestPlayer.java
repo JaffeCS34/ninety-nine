@@ -6,8 +6,8 @@ import java.util.ArrayList;
  * Player object. Students will extend this class
  * and override the getNextMove method
  * 
- * @author Mr. Jaffe
- * @version 1.0
+ * @author Roger Jaffe
+ * @version 2018-11-29
  */
 public class TestPlayer extends Player {
   

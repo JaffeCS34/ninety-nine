@@ -5,9 +5,10 @@ import java.util.logging.Logger;
 
 
 /**
- * Write a description of class Card here.
+ * Playing card abstraction
  * 
  * @author Roger Jaffe
+ * @version 2018-11-29
  */
 public class Card
 {

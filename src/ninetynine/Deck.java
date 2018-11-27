@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Write a description of class Deck here.
+ * Deck of cards abstraction
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Roger Jaffe
+ * @version 2018-11-29
  */
 public class Deck
 {

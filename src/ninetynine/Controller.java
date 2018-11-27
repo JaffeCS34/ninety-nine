@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Game controller
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Roger Jaffe
+ * @version 2018-11-29
  */
 public final class Controller
 {

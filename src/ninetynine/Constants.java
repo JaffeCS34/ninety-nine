@@ -3,6 +3,8 @@ package ninetynine;
 
 /**
  * Ninety-nine game constants
+ * @author Roger Jaffe
+ * @version 2018-11-29
  */
 public class Constants  
 {
