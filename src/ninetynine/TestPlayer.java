@@ -22,6 +22,7 @@ public class TestPlayer extends Player {
    * Player constructor with teamName added as instance variable
    * If teamName is not set, then the class name is used when printed
    * during game play
+   * @param teamName Name of the player's team
    */
   public TestPlayer(String teamName) {
     super(teamName);

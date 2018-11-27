@@ -38,7 +38,7 @@ public class Deck
   
   /**
    * Remove the provided card from the deck if it exists
-   * @param card 
+   * @param card Card to remove
    */
   public void removeCard(Card card) {
     this.cards.remove(card);
@@ -46,7 +46,7 @@ public class Deck
   
   /**
    * Removes the cards in the provided deck from this deck if they exist
-   * @param deck 
+   * @param deck Deck whose cards should be removed
    */
   public void removeCard(Deck deck) {
     for (Card card : deck.getCards()) {
@@ -66,7 +66,7 @@ public class Deck
   
   /**
    * Get a card from the top of the deck but DO NOT remove it!
-   * @return 
+   * @return Top card of the deck
    */
   public Card getCard() {
     if (this.getCardCount() > 0)
@@ -77,8 +77,8 @@ public class Deck
   
   /**
    * Get an individual card from the deck but DO NOT remove it!
-   * @param idx
-   * @return 
+   * @param idx Index of card to get
+   * @return Retrieved card
    */
   public Card getCard(int idx) {
     if (0 <= idx && idx < this.cards.size()) 
@@ -89,12 +89,16 @@ public class Deck
   
   /**
    * Gets the number of cards in this deck
-   * @return card count
+   * @return Card count
    */
   public int getCardCount() {
     return this.cards.size();
   }
   
+  /**
+   * Gets the cards in the deck
+   * @return Array of Card objects
+   */
   public Card[] getCards() {
     if (this.getCardCount() == 0) return null;    
     Card[] cards = new Card[this.getCardCount()];
@@ -158,7 +162,7 @@ public class Deck
   
   /**
    * Check if deck is empty
-   * @return 
+   * @return True if the deck is empty
    */
   public boolean isEmptyDeck() {
     return this.cards.isEmpty();

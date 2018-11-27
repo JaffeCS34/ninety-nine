@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Controller
+public final class Controller
 {
   
   ArrayList<Player> players;
@@ -23,7 +23,7 @@ public class Controller
   
   /**
    * Constructor for objects of class Controller
-   * @param players
+   * @param players ArrayList of Player objects
    */
   public Controller(ArrayList players)
   {
@@ -97,6 +97,7 @@ public class Controller
   
   /**
    * Run the game with the four players.  Player 1 always goes first
+   * @return 0 for normal exit
    */
   public int run() {
     boolean gameOver = false;
@@ -190,9 +191,9 @@ public class Controller
         }
         
         // Notify all players of the cards that were played
-        for (Player p1 : this.players) {
-          p1.cardsPlayed(play);
-        }
+        this.players.forEach((p) -> {
+          p.cardsPlayed(play);
+        });
         
         // Check to see if there's more than 1 player left
         gameOver = this.getPlayersStillAlive() == 1;

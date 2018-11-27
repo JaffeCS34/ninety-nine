@@ -12,11 +12,13 @@ import java.util.logging.Logger;
 public class Card
 {
   // instance variables - replace the example below with your own
-  private String rank;
-  private String suit;
+  private final String rank;
+  private final String suit;
 
   /**
    * Constructor for objects of class Card
+   * @param rank Card rank using Constants static constants
+   * @param suit Card suit using Constants static constants
    */
   public Card(String rank, String suit)
   {
@@ -26,7 +28,7 @@ public class Card
   
   /**
    * Get the card rank
-   * @returns Card rank
+   * @return Card rank
    */
   public String getRank() {
     return this.rank;
@@ -108,7 +110,7 @@ public class Card
   
   /**
    * Get the card suit
-   * @returns Card suit
+   * @return Card suit
    */
   public String getSuit() {
     return this.suit.toUpperCase();
@@ -116,7 +118,7 @@ public class Card
   
   /**
    * Formats the card value, i.e. "3 of HEARTS"
-   * @return 
+   * @return Card string
    */
   public String toString() {
     return this.getRank()+" of "+this.getSuit();

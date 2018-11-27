@@ -23,6 +23,7 @@ public class Player
    * Player constructor with teamName added as instance variable
    * If teamName is not set, then the class name is used when printed
    * during game play
+   * @param teamName Name of the player's team
    */
   public Player(String teamName) {
     this();
@@ -47,7 +48,7 @@ public class Player
   
   /**
    * Add the provided card to this player's deck
-   * @param card 
+   * @param card Card to be added to the player's deck
    */
   public void draw(Card card) {
     this.deck.add(card);
@@ -55,7 +56,7 @@ public class Player
   
   /**
    * Remove the cards in the provided deck from this player's deck
-   * @param cards 
+   * @param cards Cards to be removed from the player's deck
    */
   public void removeCards(Deck cards) {
     for (Card card : cards.getCards()) {

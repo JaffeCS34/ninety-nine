@@ -38,8 +38,8 @@ public class Utilities {
   
   /**
    * Checks if the provided deck and game total represents a legal move
-   * @param deck
-   * @param total
+   * @param deck Deck whose cards should be checked for a legal move
+   * @param total Current game total
    * @return True if the move is legal
    */
   public static boolean isLegalMove(Deck deck, int total) {
