@@ -37,38 +37,42 @@ public class Deck
   }
   
   /**
-   * Get the top card from this deck and return it
-   * @return Dealt card
+   * Remove the provided card from the deck if it exists
+   * @param card 
    */
-  public Card inspect() {
-    return this.inspect(0);
-  }
-
-  /**
-   * Deal the card at index idx and remove from this deck
-   * @param idx Index of card to remove
-   * @return Dealt card
-   */
-  public Card inspect(int idx) {
-    if (0 <= idx && idx < this.cards.size()) 
-      return this.cards.get(idx);
-    return null;
-  }
-  
   public void removeCard(Card card) {
     this.cards.remove(card);
   }
   
+  /**
+   * Removes the cards in the provided deck from this deck if they exist
+   * @param deck 
+   */
   public void removeCard(Deck deck) {
     for (Card card : deck.getCards()) {
       this.removeCard(card);
     }
   }
   
+  /**
+   * Returns the top card on the deck and removes it from the deck
+   * @return The top card on the deck
+   */
   public Card deal() {
-    Card card = this.inspect();
+    Card card = this.getCard();
     this.removeCard(card);
     return card;
+  }
+  
+  /**
+   * Get a card from the top of the deck but DO NOT remove it!
+   * @return 
+   */
+  public Card getCard() {
+    if (this.getCardCount() > 0)
+      return this.getCard(0);
+    else 
+      return null;
   }
   
   /**

@@ -2,20 +2,22 @@ package ninetynine;
 
 
 /**
- * Suit constants
+ * Ninety-nine game constants
  */
 public class Constants  
 {
-  public static final int PLAYER_COUNT = 4;
-  public static final int INITIAL_CARD_COUNT = 4;
-  public static final int DELAY = 5000;
+  public static final int INITIAL_CARD_COUNT = 4;   // Initial number of cards in hand
+  public static final int DELAY = 5000;             // Delay between moves (ms)
   public static final int NINETY_NINE = 99;
 
-  public static final String SPADES = "spades";
-  public static final String DIAMONDS = "diamonds";
-  public static final String CLUBS = "clubs";
-  public static final String HEARTS = "hearts";
+  // Card suits
+  public static final String SPADES = "SPADES";
+  public static final String DIAMONDS = "DIAMONDS";
+  public static final String CLUBS = "CLUBS";
+  public static final String HEARTS = "HEARTS";
   public static final String[] suits = {SPADES, DIAMONDS, CLUBS, HEARTS};
+  
+  // Card ranks
   public static final String ACE = "Ace";
   public static final String TWO = "2";
   public static final String THREE = "3";

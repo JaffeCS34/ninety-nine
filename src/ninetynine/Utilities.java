@@ -9,7 +9,7 @@ package ninetynine;
 public class Utilities {
 
   /**
-   * Gets the new score when playing this card given the old score
+   * Gets the new score when playing the provided deck and the old score
    * @param deck Deck to check
    * @param total Current total
    * @return The new score
@@ -36,6 +36,12 @@ public class Utilities {
     return total;
   }
   
+  /**
+   * Checks if the provided deck and game total represents a legal move
+   * @param deck
+   * @param total
+   * @return True if the move is legal
+   */
   public static boolean isLegalMove(Deck deck, int total) {
     boolean retValue = false;
     if (deck.getCardCount() == 2) {

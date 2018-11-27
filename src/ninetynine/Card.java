@@ -32,6 +32,11 @@ public class Card
     return this.rank;
   }
   
+  /**
+   * Get the card rank as an integer; J=11, Q=12, K=13 
+   * to allow for sorting the hand by card
+   * @return Card rank
+   */
   public int getRankInt() {
     switch (this.rank) {
       case Constants.ACE:
@@ -64,6 +69,11 @@ public class Card
     return 0;
   }
   
+  /**
+   * Get the point value for each card in the game
+   * Note: J = no change; Q = minus 10; K = 99
+   * @return Point value
+   */
   public int getPointValue() {
     switch (this.rank) {
       case Constants.ACE:
@@ -104,6 +114,10 @@ public class Card
     return this.suit.toUpperCase();
   }
   
+  /**
+   * Formats the card value, i.e. "3 of HEARTS"
+   * @return 
+   */
   public String toString() {
     return this.getRank()+" of "+this.getSuit();
   }

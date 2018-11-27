@@ -1,7 +1,5 @@
 package ninetynine;
 
-import java.util.Collections;
-
 /**
  * Player object. Students will extend this class
  * and override the getNextMove method
@@ -47,35 +45,46 @@ public class Player
     this.deck = deck;
   }
   
+  /**
+   * Add the provided card to this player's deck
+   * @param card 
+   */
   public void draw(Card card) {
     this.deck.add(card);
   }
   
+  /**
+   * Remove the cards in the provided deck from this player's deck
+   * @param cards 
+   */
   public void removeCards(Deck cards) {
     for (Card card : cards.getCards()) {
       this.deck.removeCard(card);
     }
   }
   
+  /**
+   * Get the number of cards in the player's deck
+   * @return Number of cards in the deck
+   */
   public int getCardCount() {
     return this.deck.getCardCount();
   }
   
   /**
-   * Display the player's hand
-   * @param player 
+   * Display the player's hand 
    */
   public void displayHand() {
     System.out.println("\n******* "+this.getName()+" *******");
     Card[] cards = this.deck.getCards();
-    for (int i=0; i<cards.length; i++) {
-      System.out.println(cards[i].getRank()+' '+cards[i].getSuit());
+    for (Card card : cards) {
+      System.out.println(card.toString());
     }
   }
   
   /**
    * Gets the player name
-   * @return        Player name
+   * @return Player name
    */
   public String getName() {
     return (this.teamName.equals("")) ? this.getClass().getSimpleName() : this.teamName;
@@ -91,6 +100,11 @@ public class Player
     return null;
   };
   
+  /**
+   * This method is called by the Game Controller after each player's
+   * move.  The Player can use this information as necessary.
+   * @param deck Deck of cards that were just played 
+   */
   public void cardsPlayed(Deck deck) {
     
   }  

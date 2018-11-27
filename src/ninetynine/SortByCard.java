@@ -8,10 +8,11 @@ import java.util.Comparator;
  */
 
 /**
- *
+ * Comparator that sorts by card rank only
  */
 public class SortByCard implements Comparator<Card> {
   
+  @Override
   public int compare(Card a, Card b) {
     return a.getRankInt() - b.getRankInt();
   }

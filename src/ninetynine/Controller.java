@@ -74,10 +74,19 @@ public class Controller
     }
   }
   
+  /**
+   * Gets the number of players in the game
+   * @return Number of players
+   */
   private int getPlayersStillAlive() {
     return this.players.size();
   }
   
+  /**
+   * Checks if the provided card deck of either 1 or 2 cards is a valid move
+   * @param play Card deck representing the proposed play
+   * @return True if the play is valid
+   */
   private boolean isValidPlay(Deck play) {
     boolean retValue = false;
     if (play.findPairs().size() > 0) 
@@ -95,10 +104,6 @@ public class Controller
       // Print heading
       System.out.println("\nSTART OF GAME");
             
-//      for (Player p : this.players) {
-//        p.displayHand();
-//      }
-//      
       // Turn first card over
       Card card = this.deck.deal();
       String rank = card.getRank();
@@ -196,7 +201,7 @@ public class Controller
         TimeUnit.MILLISECONDS.sleep(Constants.DELAY);
       }
       
-      System.out.println("***** "+this.players.get(this.whoseTurn).getName()+" WINS! *****");
+      System.out.println("\n***** "+this.players.get(this.whoseTurn).getName()+" WINS! *****");
       
     } catch (InterruptedException e) {
       System.out.println("OH NO!!! There was a time exception!\n");
