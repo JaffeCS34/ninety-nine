@@ -8,7 +8,7 @@ public class Constants
 {
   public static final int PLAYER_COUNT = 4;
   public static final int INITIAL_CARD_COUNT = 4;
-  public static final int DELAY = 1000;
+  public static final int DELAY = 5000;
   public static final int NINETY_NINE = 99;
 
   public static final String SPADES = "spades";

@@ -30,12 +30,18 @@ public class Deck
     this.sort();
   }
   
+  public void add(Deck deck) {
+    for (Card card : deck.getCards()) {
+      this.add(card);
+    }
+  }
+  
   /**
    * Get the top card from this deck and return it
    * @return Dealt card
    */
-  public Card deal() {
-    return this.deal(0);
+  public Card inspect() {
+    return this.inspect(0);
   }
 
   /**
@@ -43,15 +49,26 @@ public class Deck
    * @param idx Index of card to remove
    * @return Dealt card
    */
-  public Card deal(int idx) {
-    if (0 <= idx && idx < this.cards.size())
-      return this.cards.remove(idx);
-    else
-      return null;
+  public Card inspect(int idx) {
+    if (0 <= idx && idx < this.cards.size()) 
+      return this.cards.get(idx);
+    return null;
   }
   
   public void removeCard(Card card) {
     this.cards.remove(card);
+  }
+  
+  public void removeCard(Deck deck) {
+    for (Card card : deck.getCards()) {
+      this.removeCard(card);
+    }
+  }
+  
+  public Card deal() {
+    Card card = this.inspect();
+    this.removeCard(card);
+    return card;
   }
   
   /**

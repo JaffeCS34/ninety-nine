@@ -4,24 +4,23 @@
  */
 package ninetynine;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Roger Jaffe
  */
 public class NinetyNine {
 
-  Player[] players;
-
   /**
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    Player[] players = new Player[]{
-      new TestPlayer("Arthur"), 
-      new TestPlayer("Bertha"), 
-      new TestPlayer("Carlos"), 
-      new TestPlayer("Dimitri")
-    };
+    ArrayList<Player> players = new ArrayList<>();
+    players.add(new TestPlayer("Adam"));
+    players.add(new TestPlayer("Ben"));
+    players.add(new TestPlayer("Cathy")); 
+    players.add(new TestPlayer("Emily")); 
     Controller c = new Controller(players);
     c.run();
   }

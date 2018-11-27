@@ -62,23 +62,6 @@ public class DeckTest {
   }
 
   /**
-   * Test of deal method, of class Deck.
-   */
-  @Test
-  public void testDeal_int() {
-    Card card1 = new Card(Constants.TWO, Constants.HEARTS);
-    Card card2 = new Card(Constants.THREE, Constants.HEARTS);
-    Deck instance = new Deck();
-    instance.add(card1);
-    instance.add(card2);
-    Card result = instance.deal(1);
-    assertEquals(card2, result);
-    assertEquals(1, instance.getCardCount());
-    result = instance.deal(0);
-    assertEquals(card1, result);
-  }
-
-  /**
    * Test of getCard method, of class Deck.
    */
   @Test

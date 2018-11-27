@@ -1,5 +1,6 @@
 package ninetynine;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -33,13 +34,20 @@ public class TestPlayer extends Player {
    * @return A position coordinate pair of his/her next move. Returns null
    *          if no move is available
    */
+  @Override
   Deck getNextMove(int total) {
+    ArrayList<Deck> pairs = this.deck.findPairs();
+    if (pairs.size() > 0) 
+      return pairs.get(0);
+
     int i = 0;
     while (i < this.deck.getCardCount()) {
       Deck deck = new Deck();
-      deck.add(this.deck.deal());
-      if (Utilities.isLegalMove(deck, total))
+      deck.add(this.deck.inspect(i));
+      if (Utilities.isLegalMove(deck, total)) {
         return deck;
+      }
+      i++;
     }
     return null;
   };

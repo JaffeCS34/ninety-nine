@@ -12,7 +12,6 @@ import java.util.Collections;
 public class Player
 {
   protected Deck deck;
-  private boolean dead;
   private String teamName;
   
   /**
@@ -20,7 +19,6 @@ public class Player
    */
   public Player() {
     this.deck = new Deck();
-    dead = false;    
   }
   
   /**
@@ -33,29 +31,6 @@ public class Player
     this.teamName = teamName;
   }
   
-  /**
-   * Getter for dead
-   * @return dead
-   */
-  public boolean isDead() {
-    return dead;
-  }
-  
-  /**
-   * Getter for "not dead yet"
-   * @return not dead
-   */
-  public boolean isNotDead() {
-    return !this.isDead();
-  }
-  
-  /**
-   * Setter for dead
-   */
-  public void setDead() {
-    dead = true;
-  }
-
   /**
    * Gets the player's deck
    * @return Deck of cards
@@ -80,6 +55,10 @@ public class Player
     for (Card card : cards.getCards()) {
       this.deck.removeCard(card);
     }
+  }
+  
+  public int getCardCount() {
+    return this.deck.getCardCount();
   }
   
   /**

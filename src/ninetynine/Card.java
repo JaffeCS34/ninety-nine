@@ -101,7 +101,11 @@ public class Card
    * @returns Card suit
    */
   public String getSuit() {
-    return this.suit;
+    return this.suit.toUpperCase();
+  }
+  
+  public String toString() {
+    return this.getRank()+" of "+this.getSuit();
   }
   
 }

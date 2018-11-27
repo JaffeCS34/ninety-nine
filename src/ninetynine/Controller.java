@@ -13,8 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class Controller
 {
   
-  Player[] players;
+  ArrayList<Player> players;
   Deck deck;
+  Deck discards;
   int whoseTurn;
   int total;
   int direction;    // 1 = increasing order; -1 = decreasing order
@@ -24,7 +25,7 @@ public class Controller
    * Constructor for objects of class Controller
    * @param players
    */
-  public Controller(Player[] players)
+  public Controller(ArrayList players)
   {
     this.players = players;
     this.displayMatchup();
@@ -39,23 +40,28 @@ public class Controller
     this.direction = 1;
     this.deck = new Deck();
     this.deck.newDeck();
+    this.discards = new Deck();
     for (int c = 0; c < Constants.INITIAL_CARD_COUNT; c++) 
-      for (int i = 0; i < players.length ; i++) 
-        this.players[i].draw(this.deck.deal());  
+      for (int i = 0; i < players.size() ; i++) 
+        this.players.get(i).draw(this.deck.deal());  
   }
 
   /**
    * Moves the turn pointer to the next player
    */
-  private void getNextTurn() {
-    this.whoseTurn = (this.whoseTurn + (this.direction)) % Constants.PLAYER_COUNT;
+  private void nextTurn() {
+    this.whoseTurn = (this.whoseTurn + (this.direction));
+    if (this.whoseTurn >= 0) 
+      this.whoseTurn = this.whoseTurn % this.getPlayersStillAlive();
+    else 
+      this.whoseTurn = this.getPlayersStillAlive() - 1;
   }
   
   /**
    * Switches the player order the other way
    */
-  private void switchOrder() {
-    this.whoseTurn = this.whoseTurn * -1;
+  private void switchDirection() {
+    this.direction = this.direction * -1;
   }
   
   /**
@@ -63,30 +69,21 @@ public class Controller
    */
   public void displayMatchup() {
     System.out.println("\n******* MATCHUP *******");
-    for (int i = 0; i < this.players.length; i++) {
-      System.out.println("  "+this.players[i].getName());
+    for (int i = 0; i < this.players.size(); i++) {
+      System.out.println("  "+this.players.get(i).getName());
     }
   }
   
   private int getPlayersStillAlive() {
-    int total = 0;
-    for (Player player : this.players) {
-      if (player.isNotDead())
-        total++;
-    }
-    return total;
+    return this.players.size();
   }
   
   private boolean isValidPlay(Deck play) {
     boolean retValue = false;
-//    if (play.getCardCount() == 2) {
-//      if (play.isPair()) {
-//        retValue = true;
-//      }
-//    } else if(play.getCardCount() == 1 && Utilities.isLegalMove(play, this.total)) {
-//      retValue = true;
-//    }
-    return retValue;
+    if (play.findPairs().size() > 0) 
+      return true;
+    else 
+      return play.getCardCount() == 1 && Utilities.isLegalMove(play, this.total);
   }
   
   /**
@@ -97,53 +94,109 @@ public class Controller
     try {
       // Print heading
       System.out.println("\nSTART OF GAME");
-      
-      this.displayMatchup();
-      
-      for (Player p : this.players) {
-        p.displayHand();
-      }
+            
+//      for (Player p : this.players) {
+//        p.displayHand();
+//      }
+//      
+      // Turn first card over
+      Card card = this.deck.deal();
+      String rank = card.getRank();
+      if (rank.equals(Constants.JACK))
+        this.switchDirection();
+      else if (rank.equals(Constants.KING))
+        this.total = card.getPointValue();
+      else
+        this.total += card.getPointValue();
+      System.out.println("\nFirst card is the "+rank+" of "+card.getSuit());
+      System.out.println("Game total is "+this.total);
+      this.discards.add(card);
 
       // Delay so we can see the progression in the console
       TimeUnit.MILLISECONDS.sleep(Constants.DELAY);
 
       while (!gameOver) {
-        Player player = this.players[this.whoseTurn];
+        // Get the player and display the current hand
+        Player player = this.players.get(this.whoseTurn);
+        player.displayHand();
+        
+        // Get the player's next move
         Deck play = player.getNextMove(this.total);
 
         // Process the play
+        // If the play is not valid
         if (play == null || !this.isValidPlay(play)) {
-          player.setDead();
+          // Remove the player from the active player list
+          this.players.remove(player);
+          // Fix the whose turn counter if the removed player was the 
+          // last player in the list
+          if (this.whoseTurn == this.getPlayersStillAlive()) 
+            this.whoseTurn--;
+          // Add the removed player to the finished player
           this.finishOrder.add(player);
-          System.out.println(player.getName()+" cannot make a play and is OUT");
+          // Notify 
+          System.out.println("\n"+player.getName()+" cannot make a play and is OUT");
+    
         } else if (this.isValidPlay(play)) {
+          // Play is valid
           this.total = Utilities.getNewTotal(play, this.total);
+          // Remove the cards from the player's hand
           player.removeCards(play);
-          player.draw(this.deck.deal());
-          System.out.print(player.getName()+" played ");
-          if (play.getCardCount() == 2) {
-            System.out.println("a pair of "+play.getCard(0).getRank()+"'s");
-          } else {
-            System.out.println("the "+play.getCard(0).getRank()+" of "+play.getCard(0).getSuit());
+          if (player.getCardCount() == 0) {
+            // Remove the player from the active player list
+            this.players.remove(player);
+            // Fix the whose turn counter if the removed player was the 
+            // last player in the list
+            if (this.whoseTurn == this.getPlayersStillAlive()) 
+              this.whoseTurn--;
+            // Add the removed player to the finished player
+            this.finishOrder.add(player);
+            // Notify 
+            System.out.println("\n"+player.getName()+" has no cards left and is OUT");
           }
-          System.out.println("Now the total is "+this.total);
+          // Add the cards to the discards pile
+          this.discards.add(play);
+          // Player draws a new card from the deck
+          player.draw(this.deck.deal());
 
-          // Delay so we can see the progression in the console
-          TimeUnit.MILLISECONDS.sleep(Constants.DELAY);
+          // If the deck is empty move the discards pile to the
+          // deck, shuffle and continue the game
+          if (this.deck.getCardCount() == 0) {
+            this.deck = this.discards;
+            this.discards = new Deck();
+            this.deck.shuffle();
+            System.out.println("Out of cards... Reshuffling");
+          }
 
+          // If a Jack was played switch the direction of play
+          if (play.getCard(0).getRank().equals(Constants.JACK)) 
+            this.switchDirection();
+          
+          // Print out play to console
+          System.out.print("\n"+player.getName()+" played ");
+          if (play.getCardCount() == 2) {
+            System.out.println("a pair of "+play.getCard(0).getRank()+"s");
+          } else {
+            System.out.println("the "+play.getCard(0).toString());
+          }
+          System.out.println("Now the total is --"+this.total+"--");
+          System.out.println("\nThere are "+this.deck.getCardCount()+" cards left in the deck");
+          this.nextTurn();
         }
         
-        // Notify players of the cards that were played
+        // Notify all players of the cards that were played
         for (Player p1 : this.players) {
-          if (p1.isNotDead()) 
-            p1.cardsPlayed(play);
+          p1.cardsPlayed(play);
         }
         
-        // Check to see if game is still going
+        // Check to see if there's more than 1 player left
         gameOver = this.getPlayersStillAlive() == 1;
+
+        // Delay so we can see the progression in the console
+        TimeUnit.MILLISECONDS.sleep(Constants.DELAY);
       }
       
-      System.out.println("Player "+(this.whoseTurn+1)+" "+this.players[this.whoseTurn].getName()+" WINS!");
+      System.out.println("***** "+this.players.get(this.whoseTurn).getName()+" WINS! *****");
       
     } catch (InterruptedException e) {
       System.out.println("OH NO!!! There was a time exception!\n");
