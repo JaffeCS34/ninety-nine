@@ -38,17 +38,6 @@ public class DeckTest {
   }
 
   /**
-   * Test of add method, of class Deck.
-   */
-  @Test
-  public void testAdd() {
-    Card card = new Card(Constants.TWO, Constants.HEARTS);
-    Deck instance = new Deck();
-    instance.add(card);
-    assertEquals(1, instance.getCardCount());
-  }
-
-  /**
    * Test of deal method, of class Deck.
    */
   @Test
@@ -65,7 +54,7 @@ public class DeckTest {
    * Test of getCard method, of class Deck.
    */
   @Test
-  public void testGetCard() {
+  public void testGetCard_int() {
     Card card1 = new Card(Constants.TWO, Constants.HEARTS);
     Card card2 = new Card(Constants.THREE, Constants.HEARTS);
     Deck instance = new Deck();
@@ -217,6 +206,101 @@ public class DeckTest {
     Card[] expResult = null;
     Card[] result = instance.getCards();
     assertArrayEquals(expResult, result);
+  }
+
+  /**
+   * Test of add method, of class Deck.
+   */
+  @Test
+  public void testAdd_Card() {
+    Card card = new Card(Constants.TWO, Constants.HEARTS);
+    Deck instance = new Deck();
+    instance.add(card);
+    assertEquals(1, instance.getCardCount());
+    assertEquals(card, instance.getCard());
+  }
+
+  /**
+   * Test of add method, of class Deck.
+   */
+  @Test
+  public void testAdd_Deck() {
+    Card card1 = new Card(Constants.TWO, Constants.HEARTS);
+    Card card2 = new Card(Constants.THREE, Constants.HEARTS);
+    Deck deckToAdd = new Deck();
+    deckToAdd.add(card1);
+    deckToAdd.add(card2);
+    Deck instance = new Deck();
+    instance.add(deckToAdd);
+    assertEquals(2, instance.getCardCount());
+    assertEquals(card1, instance.getCard());
+    assertEquals(card2, instance.getCard(1));
+  }
+
+  /**
+   * Test of removeCard method, of class Deck.
+   */
+  @Test
+  public void testRemoveCard_Card() {
+    Card card1 = new Card(Constants.TWO, Constants.HEARTS);
+    Card card2 = new Card(Constants.THREE, Constants.HEARTS);
+    Deck deck = new Deck();
+    deck.add(card1);
+    deck.add(card2);
+    deck.removeCard(card2);
+    assertEquals(1, deck.getCardCount());
+    assertEquals(card1, deck.getCard());
+  }
+
+  /**
+   * Test of removeCard method, of class Deck.
+   */
+  @Test
+  public void testRemoveCard_Deck() {
+    Card card1 = new Card(Constants.TWO, Constants.HEARTS);
+    Card card2 = new Card(Constants.THREE, Constants.HEARTS);
+    Card card3 = new Card(Constants.KING, Constants.SPADES);
+    Deck deck1 = new Deck();
+    deck1.add(card1);
+    deck1.add(card2);
+    deck1.add(card3);
+    Deck deck2 = new Deck();
+    deck2.add(card1);
+    deck2.add(card2);
+    deck1.removeCard(deck2);
+    assertEquals(1, deck1.getCardCount());
+    assertEquals(card3, deck1.getCard());
+  }
+
+  /**
+   * Test of deal method, of class Deck.
+   */
+  @Test
+  public void testDeal() {
+    Card card1 = new Card(Constants.TWO, Constants.HEARTS);
+    Card card2 = new Card(Constants.THREE, Constants.HEARTS);
+    Deck instance = new Deck();
+    instance.add(card1);
+    instance.add(card2);
+    Card expResult = card1;
+    Card result = instance.deal();
+    assertEquals(expResult, result);
+    assertEquals(1, instance.getCardCount());
+  }
+
+  /**
+   * Test of getCard method, of class Deck.
+   */
+  @Test
+  public void testGetCard_0args() {
+    Card card1 = new Card(Constants.TWO, Constants.HEARTS);
+    Card card2 = new Card(Constants.THREE, Constants.HEARTS);
+    Deck instance = new Deck();
+    instance.add(card1);
+    instance.add(card2);
+    Card expResult = card1;
+    Card result = instance.getCard();
+    assertEquals(expResult, result);
   }
 
 }

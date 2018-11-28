@@ -77,7 +77,7 @@ public class CardTest {
    * Test of getPointValue method, of class Card.
    */
   @Test
-  public void testGetPointValue1() {
+  public void testGetPointValue() {
     Card instance = new Card(Constants.EIGHT, Constants.SPADES);
     int expResult = 8;
     int result = instance.getPointValue();
@@ -114,6 +114,18 @@ public class CardTest {
     Card instance = new Card(Constants.KING, Constants.SPADES);
     int expResult = 99;
     int result = instance.getPointValue();
+    assertEquals(expResult, result);
+  }
+
+  /**
+   * Test of toString method, of class Card.
+   */
+  @Test
+  public void testToString() {
+    System.out.println("toString");
+    Card instance = new Card(Constants.THREE, Constants.DIAMONDS);
+    String expResult = "3 of DIAMONDS";
+    String result = instance.toString();
     assertEquals(expResult, result);
   }
   
