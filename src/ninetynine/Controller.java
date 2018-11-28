@@ -119,13 +119,16 @@ public final class Controller
       this.discards.add(card);
 
       // Delay so we can see the progression in the console
-      TimeUnit.MILLISECONDS.sleep(Constants.DELAY);
+      TimeUnit.MILLISECONDS.sleep(Constants.DELAY_TO_NEXT_PLAYER);
 
       while (!gameOver) {
         // Get the player and display the current hand
         Player player = this.players.get(this.whoseTurn);
         player.displayHand();
         
+        // Delay so we can see the progression in the console
+        TimeUnit.MILLISECONDS.sleep(Constants.DELAY_TO_MOVE);
+
         // Get the player's next move
         Deck play = player.getNextMove(this.total);
 
@@ -171,7 +174,7 @@ public final class Controller
             this.deck = this.discards;
             this.discards = new Deck();
             this.deck.shuffle();
-            System.out.println("Out of cards... Reshuffling");
+//            System.out.println("Out of cards... Reshuffling");
           }
 
           // If a Jack was played switch the direction of play
@@ -186,7 +189,7 @@ public final class Controller
             System.out.println("the "+play.getCard(0).toString());
           }
           System.out.println("Now the total is --"+this.total+"--");
-          System.out.println("\nThere are "+this.deck.getCardCount()+" cards left in the deck");
+//          System.out.println("\nThere are "+this.deck.getCardCount()+" cards left in the deck");
           this.nextTurn();
         }
         
@@ -199,7 +202,7 @@ public final class Controller
         gameOver = this.getPlayersStillAlive() == 1;
 
         // Delay so we can see the progression in the console
-        TimeUnit.MILLISECONDS.sleep(Constants.DELAY);
+        TimeUnit.MILLISECONDS.sleep(Constants.DELAY_TO_NEXT_PLAYER);
       }
       
       System.out.println("\n***** "+this.players.get(this.whoseTurn).getName()+" WINS! *****");

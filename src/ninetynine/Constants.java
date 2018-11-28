@@ -9,7 +9,8 @@ package ninetynine;
 public class Constants  
 {
   public static final int INITIAL_CARD_COUNT = 4;   // Initial number of cards in hand
-  public static final int DELAY = 5000;             // Delay between moves (ms)
+  public static final int DELAY_TO_MOVE = 2500;             // Delay between moves (ms)
+  public static final int DELAY_TO_NEXT_PLAYER = 1500;             // Delay between moves (ms)
   public static final int NINETY_NINE = 99;
 
   // Card suits
